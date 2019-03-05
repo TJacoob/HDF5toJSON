@@ -10,8 +10,6 @@ INPUT = 'testFiles/WaterProperties.hdf5'
 OUTPUT = 'testFiles/newdata.json'
 
 def singleMagnitude(mag):
-    #print("Start Script")
-    start = time.time()
 
     f = h5py.File(INPUT, 'r')
 
@@ -30,9 +28,11 @@ def singleMagnitude(mag):
     #print(lonDif)
 
     # Multi Process
-    magDict = {0: "ammonia", 1: "cohesive sediment", 2: "density", 3: "dissolved non-refractory organic nitrogen"}
+    magDict = {0: "ammonia", 1: "cohesive sediment", 2: "density", 3: "dissolved non-refractory organic nitrogen", 4:"dissolved non-refractory organic phosphorus", 5:"dissolved refractory organic nitrogen", 6:"dissolved refractory organic phosphorus", 7:"inorganic phosphorus", 8:"nitrate", 9:"nitrite", 10:"oxygen", 11:"particulate organic nitrogen", 12:"particulate organic phosphorus", 13:"phytoplankton", 14:"salinity", 15:"short wave solar radiation", 16:"short wave solar radiation extinction", 17:"temperature", 18:"zooplankton"}
     magnitude = f['Results'][magDict[mag]]
-    print(magnitude)
+    OUTPUT = "testFiles/" + magDict[mag] + ".json"
+    print(OUTPUT)
+    #print(magnitude)
 
     # Single Process
     #magnitude = f['Results'][mag];
@@ -74,23 +74,26 @@ def singleMagnitude(mag):
 
     #print("Exporting Data to JSON");
 
-    with open('testFiles/newdata.json', 'w') as outfile:
+    with open(OUTPUT, 'w') as outfile:
         json.dump(geojs, outfile)
 
     # print(geojs);
 
     #print("Exiting Program")
 
-    end = time.time()
-    #print("Script Execution: ",round(end - start, 2))
-
 
 def multiProcessing():
+
+    print("Start Script")
+    start = time.time()
+
     pool = mp.Pool(mp.cpu_count())
     # results = pool.map(line, range(0, GRID_X));
-    results = pool.map(singleMagnitude, range(0, 3))
+    pool.map(singleMagnitude, range(0, 18))
 
-    print( results )
+    end = time.time()
+    print("Script Execution: ",round(end - start, 2))
+
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
 
 #singleMagnitude(0)
