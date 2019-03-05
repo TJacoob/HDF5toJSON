@@ -10,7 +10,7 @@ import time
 def main():
     #h5py.run_tests();
     start = time.time()
-    print(start);
+    #print(start);
 
     geojs = {
         "type": "FeatureCollection",
@@ -27,8 +27,9 @@ def main():
 
     results = f['Results'];
 
-    for x in range(0,243):      # Should match the grid size
-        for y in range(0,114):
+    for x in range(0,1):      # Should match the grid size
+        start = time.time()
+        for y in range(0,115):
             #print(x,y);
             unit = {
                 "type": "Feature",
@@ -40,6 +41,7 @@ def main():
             };
 
             # Grid
+
             coordinates = [
                 [json.dumps(round(longitude[x][y],5)), json.dumps(round(latitude[x][y],5))],
                 [json.dumps(round(longitude[x+1][y+1],5)), json.dumps(round(latitude[x][y],5))],
@@ -47,6 +49,8 @@ def main():
                 [json.dumps(round(longitude[x][y],5)), json.dumps(round(latitude[x+1][y+1],5))],
                 [json.dumps(round(longitude[x][y],5)), json.dumps(round(latitude[x][y],5))],
             ];
+
+            #coordinates = [];
             unit['geometry']['coordinates'][0]=coordinates;
 
             #print(coordinates);
@@ -68,6 +72,8 @@ def main():
             # Unit is Ready, annexing to the geojs
             geojs['features'].append(unit);
 
+        end = time.time()
+        print("Per Line: ", round(end - start, 2))
 
     print("Exporting Data to JSON");
 
@@ -79,6 +85,6 @@ def main():
     print("Exiting Program")
 
     end = time.time()
-    print(end - start)
+    print(round(end - start,2))
 
 main()
