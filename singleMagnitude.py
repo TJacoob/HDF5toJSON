@@ -66,9 +66,9 @@ def singleMagnitude(mag):
 
             for time_series in magnitude:
                 #print(time_series)
-                if ( time_series[:5]=='00001' ):
-                    data = f['Results'][mag][time_series]
-                    cell['properties'][time_series] = json.dumps(round(Decimal(data[0][x][y]), 5))
+                #if ( time_series[:5]=='00001' ):
+                data = magnitude[time_series]
+                cell['properties'][time_series] = json.dumps(round(Decimal(data[0][x][y]), 5))
 
             geojs['features'].append(cell)
 
@@ -82,7 +82,7 @@ def singleMagnitude(mag):
     #print("Exiting Program")
 
     end = time.time()
-    #print("Script Execution: ",round(end - start, 2))
+    print("Script Execution: ",round(end - start, 2))
 
 
 def multiProcessing():
@@ -93,6 +93,6 @@ def multiProcessing():
     print( results )
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
 
-#singleMagnitude(0)
-multiProcessing()
+singleMagnitude(0)
+#multiProcessing()
 

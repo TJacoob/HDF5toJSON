@@ -39,6 +39,8 @@ def singleMagnitude(mag):
 
     for x in range(0, 244):
         for y in range(0, 115):
+            relevant = True
+
             cell = {
                 "type": "Feature",
                 "properties": {},
@@ -65,12 +67,16 @@ def singleMagnitude(mag):
             cell['geometry']['coordinates'][0] = coordinates;
 
             for time_series in magnitude:
-                #print(time_series)
-                if ( time_series[:5]=='00001' ):
-                    data = f['Results'][mag][time_series]
-                    cell['properties'][time_series] = json.dumps(round(Decimal(data[0][x][y]), 5))
-
-            geojs['features'].append(cell)
+                #print(time_series[-5:])
+                #if ( int(time_series[-5:]) in range(1,2) ):
+                if (int(time_series[-5:]) == 1):
+                    data = magnitude[time_series]
+                    if ( data[0][x][y] == -9900000000000000.0 ):
+                        relevant = False
+                    else:
+                        cell['properties'][time_series] = json.dumps(round(Decimal(data[0][x][y]), 5))
+            if relevant:
+                geojs['features'].append(cell)
 
     #print("Exporting Data to JSON");
 
@@ -89,7 +95,7 @@ def multiProcessing():
 
     pool = mp.Pool(mp.cpu_count())
     # results = pool.map(line, range(0, GRID_X));
-    pool.map(singleMagnitude, range(0, 18))
+    pool.map(singleMagnitude, range(15, 18))
 
     end = time.time()
     print("Script Execution: ",round(end - start, 2))
