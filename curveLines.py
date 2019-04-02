@@ -9,7 +9,7 @@ import time
 INPUT = 'testFiles/WaterProperties.hdf5'
 OUTPUT = 'testFiles/newdata.json'
 
-def singleMagnitude(mag):
+def curveLine(mag):
     #print("Start Script")
     start = time.time()
 
@@ -23,10 +23,10 @@ def singleMagnitude(mag):
     longitude = f['Grid']['Longitude'];
     latitude = f['Grid']['Latitude'];
 
-    latDif = round(f['Grid']['Latitude'][0][1] - f['Grid']['Latitude'][0][0],5)
+    #latDif = round(f['Grid']['Latitude'][0][1] - f['Grid']['Latitude'][0][0],5)
     #print(latDif)
 
-    lonDif = round(f['Grid']['Longitude'][1][0] - f['Grid']['Longitude'][0][0], 5)
+    #lonDif = round(f['Grid']['Longitude'][1][0] - f['Grid']['Longitude'][0][0], 5)
     #print(lonDif)
 
     # Multi Process
@@ -37,40 +37,33 @@ def singleMagnitude(mag):
     # Single Process
     #magnitude = f['Results'][mag];
 
-    for x in range(0, 244):
-        for y in range(0, 115):
-            cell = {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [[]]
-                }
-            }
+    lines = {}
 
-            lat = round(latitude[x][y],5)
-            latPlus = lat + latDif
-
-            lon = round(longitude[x][y], 5)
-            lonPlus = lon + lonDif
-
-            coordinates = [
-                [json.dumps(lon), json.dumps(lat)],
-                [json.dumps(lonPlus), json.dumps(lat)],
-                [json.dumps(lonPlus), json.dumps(latPlus)],
-                [json.dumps(lon), json.dumps(latPlus)],
-                [json.dumps(lon), json.dumps(lat)],
-            ];
-
-            cell['geometry']['coordinates'][0] = coordinates;
-
+    for x in range(0, 243):
+        for y in range(0, 114):
+            border = False
             for time_series in magnitude:
-                #print(time_series)
-                if ( time_series[:5]=='00001' ):
-                    data = magnitude[time_series]
-                    cell['properties'][time_series] = json.dumps(round(Decimal(data[0][x][y]), 5))
+                if (int(time_series[-5:]) == 1):
+                    data = magnitude[time_series][0][x][y]
+                    if (data != -9900000000000000.0):      # Check if value is useful
+                        data = round(data, 1)
+                        if ( data != round(magnitude[time_series][0][x+1][y],1) or data != round(magnitude[time_series][0][x][y+1],1) or data != round(magnitude[time_series][0][x+1][y+1],1) ):
+                            border = True
+                        if ( border ):
+                            coord = (round(longitude[x][y], 5),round(latitude[x][y],5))
+                            if ( data in lines ):
+                                lines[data].append(coord)
+                                #print("value exists")
+                            else:
+                                #print("value doesnt exist")
+                                lines[data] = [coord]
 
-            geojs['features'].append(cell)
+    print(lines)
+
+
+
+            #value = magnitude[0][x][y]
+            #if ( value )
 
     #print("Exporting Data to JSON");
 
@@ -88,17 +81,11 @@ def singleMagnitude(mag):
 def multiProcessing():
     pool = mp.Pool(mp.cpu_count())
     # results = pool.map(line, range(0, GRID_X));
-    results = pool.map(singleMagnitude, range(0, 3))
+    results = pool.map(curveLine, range(0, 3))
 
     print( results )
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
 
-def main():
-    try:
-        singleMagnitude(17)
-    except Exception as e:
-        print("Some Exception")
-
-main()
+curveLine(17)
 #multiProcessing()
 

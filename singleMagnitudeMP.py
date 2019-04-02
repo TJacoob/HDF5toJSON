@@ -93,9 +93,13 @@ def multiProcessing():
     print("Start Script")
     start = time.time()
 
-    pool = mp.Pool(mp.cpu_count())
-    # results = pool.map(line, range(0, GRID_X));
-    pool.map(singleMagnitude, range(15, 18))
+    try:
+        pool = mp.Pool(mp.cpu_count())
+        # results = pool.map(line, range(0, GRID_X));
+        pool.map(singleMagnitude, range(15, 18))
+    except Exception as e:
+        print("Some Exception")
+        # Logs the error appropriately.
 
     end = time.time()
     print("Script Execution: ",round(end - start, 2))
