@@ -41,38 +41,73 @@ def curveLine(mag):
 
     for x in range(0, 243):
         for y in range(0, 114):
-            border = False
+            # Marching Squares Implementation
             for time_series in magnitude:
                 if (int(time_series[-5:]) == 1):
-                    data = magnitude[time_series][0][x][y]
-                    if (data != -9900000000000000.0):      # Check if value is useful
-                        data = round(data, 1)
-                        if ( data != round(magnitude[time_series][0][x+1][y],1) or data != round(magnitude[time_series][0][x][y+1],1) or data != round(magnitude[time_series][0][x+1][y+1],1) ):
-                            border = True
-                        if ( border ):
-                            coord = (round(longitude[x][y], 5),round(latitude[x][y],5))
-                            if ( data in lines ):
-                                lines[data].append(coord)
-                                #print("value exists")
-                            else:
-                                #print("value doesnt exist")
-                                lines[data] = [coord]
+                    value = round(magnitude[time_series][0][x][y],1)
+                    if value not in lines:
+                        lines[value] = []
+                    if ( value != -9900000000000000.0 ): # Check if data is relevant
+                        direita = round(magnitude[time_series][0][x+1][y],1)
+                        baixo = round(magnitude[time_series][0][x][y+1], 1)
+                        direitabaixo = round(magnitude[time_series][0][x+1][y+1], 1)
+                        if (x == 0 and y == 0):
+                            lines[value].append([round(longitude[x][y], 5), round(latitude[x][y], 5)])
+                        elif ( value != direita ):  # Direita
+                            if ( direita not in lines ):
+                                lines[direita] = []
+                            lines[value].append([round(longitude[x][y], 5), round(latitude[x][y], 5)])
+                            lines[direita].append([round(longitude[x+1][y], 5), round(latitude[x+1][y], 5)])
+                            print("Cell (%s, %s) added" % (x, y))
+                        elif ( value != baixo ):  # Baixo
+                            if ( baixo not in lines ):
+                                lines[baixo] = []
+                            lines[value].append([round(longitude[x][y], 5), round(latitude[x][y], 5)])
+                            lines[baixo].append([round(longitude[x][y+1], 5), round(latitude[x][y+1], 5)])
+                            print("Cell (%s, %s) added" % (x, y))
+                        elif ( value != direitabaixo ):  # Baixo e Direita
+                            if ( direitabaixo not in lines ):
+                                lines[direitabaixo] = []
+                            lines[value].append([round(longitude[x][y], 5), round(latitude[x][y], 5)])
+                            lines[direitabaixo].append([round(longitude[x+1][y+1], 5), round(latitude[x+1][y+1], 5)])
+                            print("Cell (%s, %s) added" % (x, y))
+                        else:
+                            print("Cell (%s, %s) ignored" % (x,y))
 
     print(lines)
 
+    print("Transforming Values into geoJson")
+
+    geojs = {
+        "type": "FeatureCollection",
+        "features": []
+    };
+
+    for value in lines:
+
+        area = {
+            "type": "Feature",
+            "properties": {magDict[mag]:value},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [lines[value]]
+            }
+        }
+
+        geojs["features"].append(area)
 
 
-            #value = magnitude[0][x][y]
-            #if ( value )
+    #value = magnitude[0][x][y]
+    #if ( value )
 
-    #print("Exporting Data to JSON");
+    print("Exporting Data to JSON");
 
     with open('testFiles/newdata.json', 'w') as outfile:
         json.dump(geojs, outfile)
 
-    # print(geojs);
+    print(geojs);
 
-    #print("Exiting Program")
+    print("Exiting Program")
 
     end = time.time()
     print("Script Execution: ",round(end - start, 2))
