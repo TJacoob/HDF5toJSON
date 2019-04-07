@@ -39,8 +39,8 @@ def curveLine(mag):
 
     lines = {}
 
-    for x in range(0, 243):
-        for y in range(0, 114):
+    for x in range(0, 10):
+        for y in range(0, 10):
             # Marching Squares Implementation
             for time_series in magnitude:
                 if (int(time_series[-5:]) == 1):
@@ -84,6 +84,16 @@ def curveLine(mag):
     };
 
     for value in lines:
+
+        #print("Valor: ",value)
+        #print(len(lines[value]))
+
+        if len(lines[value]) == 1:
+            continue
+
+        print(lines[value])
+        lines[value].append(lines[value][0])
+        print(lines[value])
 
         area = {
             "type": "Feature",
