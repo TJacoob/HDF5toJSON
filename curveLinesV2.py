@@ -41,34 +41,74 @@ def curveLine(mag):
     #magnitude = f['Results'][mag];
 
     for y in range(0,RANGEY):       #113
-        cachedValue = round(magnitude[magDict[mag]+"_00001"][0][0][y],1);
+        cachedValue = round(magnitude[magDict[mag]+"_00001"][0][0][y],1)
         cachedX = 0
         print(cachedValue)
         for x in range(0,RANGEX):   #243
             relevant = False
-            value = round(magnitude[magDict[mag]+"_00001"][0][x][y],1);
-            if ( value != cachedValue ):        # If the value is the same, move on to the next value
+            value = round(magnitude[magDict[mag]+"_00001"][0][x][y],1)
+            if ( value != cachedValue ):
                 relevant = True
-            if ( x==RANGEX ):
+            if ( x == RANGEX ):         # If in the last square
                 relevant = True
-            if relevant:  # If the value is diferent, then close the existing polygon and cache the new values
+            if relevant:
                 if ( cachedValue != -9900000000000000):
+                    if ( value == -9900000000000000):
+                        if ( y < RANGEY and y > 0 ):
+                            valueAbove = round(magnitude[magDict[mag] + "_00001"][0][x][y+1], 1)
+                            valueBelow = round(magnitude[magDict[mag] + "_00001"][0][x][y-1], 1)
+                            if ( value != valueBelow and value != valueAbove ):
+                                coord = [
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                    [round(longitude[x+1][y], 5), round(latitude[x+1][y], 5)],
+                                    [round(longitude[x+1][y + 1], 5), round(latitude[x+1][y + 1], 5)],
+                                    [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX + 1][y + 1], 5)],
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                ]
+                            elif ( value != valueAbove ):
+                                coord = [
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                    [round(longitude[x][y], 5), round(latitude[x][y], 5)],
+                                    [round(longitude[x+1][y + 1], 5), round(latitude[x+1][y + 1], 5)],
+                                    [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX+1][y + 1], 5)],
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                ]
+                            elif ( value != valueBelow ):
+                                coord = [
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                    [round(longitude[x+1][y], 5), round(latitude[x+1][y], 5)],
+                                    [round(longitude[x][y + 1], 5), round(latitude[x][y + 1], 5)],
+                                    [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX + 1][y + 1], 5)],
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                ]
+                            else:
+                                coord = [
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                    [round(longitude[x][y], 5), round(latitude[x][y], 5)],
+                                    [round(longitude[x][y + 1], 5), round(latitude[x][y + 1], 5)],
+                                    [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX + 1][y + 1], 5)],
+                                    [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                                ]
+                    else:
+                        coord = [
+                            [round(longitude[cachedX][y],5),round(latitude[cachedX][y],5)],
+                            [round(longitude[x][y],5),round(latitude[x][y],5)],
+                            [round(longitude[x][y+1], 5), round(latitude[x][y+1], 5)],
+                            [round(longitude[cachedX][y+1], 5), round(latitude[cachedX][y+1], 5)],
+                            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
+                        ]
+
                     polygon = {
                         "type": "Feature",
                         "properties": {magDict[mag]+"_00001":cachedValue},
                         "geometry": {
                             "type": "Polygon",
-                            "coordinates": [[
-                                [round(longitude[cachedX][y],5),round(latitude[cachedX][y],5)],
-                                [round(longitude[x][y],5),round(latitude[x][y],5)],
-                                [round(longitude[x][y+1], 5), round(latitude[x][y+1], 5)],
-                                [round(longitude[cachedX][y+1], 5), round(latitude[cachedX][y+1], 5)],
-                                [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-                            ]]
+                            "coordinates": [ coord ]
                         }
                     }
-
                     geojs["features"].append(polygon);
+
+
 
                 cachedX = x;
                 cachedValue = value;
