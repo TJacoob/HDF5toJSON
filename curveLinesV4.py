@@ -7,13 +7,13 @@ import multiprocessing as mp
 import time
 
 INPUT = 'testFiles/WaterProperties.hdf5'
-OUTPUT = 'testFiles/newdata.json'
+#OUTPUT = 'testFiles/newdata.json'
 
-#RANGEX = 243;
-#RANGEY = 113;
+RANGEX = 243;
+RANGEY = 113;
 
-RANGEX = 100;
-RANGEY = 100;
+#RANGEX = 100;
+#RANGEY = 100;
 
 def curveLine(mag):
     #print("Start Script")
@@ -38,7 +38,8 @@ def curveLine(mag):
     # Multi Process
     magDict = {0: "ammonia", 1: "cohesive sediment", 2: "density", 3: "dissolved non-refractory organic nitrogen", 4:"dissolved non-refractory organic phosphorus", 5:"dissolved refractory organic nitrogen", 6:"dissolved refractory organic phosphorus", 7:"inorganic phosphorus", 8:"nitrate", 9:"nitrite", 10:"oxygen", 11:"particulate organic nitrogen", 12:"particulate organic phosphorus", 13:"phytoplankton", 14:"salinity", 15:"short wave solar radiation", 16:"short wave solar radiation extinction", 17:"temperature", 18:"zooplankton"}
     magnitude = f['Results'][magDict[mag]]
-    print(magnitude)
+    print(magDict[mag])
+    OUTPUT = 'testFiles/' + magDict[mag] + '.json'
 
     for y in range(0,RANGEY):
         startValue = round(magnitude[magDict[mag] + "_00001"][0][0][y], 1)
@@ -56,7 +57,7 @@ def curveLine(mag):
             # These adjustments use the cells above and below to decide, so they don't work on the first and last line
             if ( y == 0 or y == RANGEY ):
                 # Not quite sure what should happen
-                print("Edge of the map")
+                #print("Edge of the map")
                 continue
 
             else:
@@ -115,61 +116,40 @@ def curveLine(mag):
             continue
 
 
-    print("Exporting Data to JSON");
+    #print("Exporting Data to JSON");
 
-    with open('testFiles/newdata.json', 'w') as outfile:
+    with open(OUTPUT, 'w') as outfile:
         json.dump(geojs, outfile)
 
-    print(geojs);
+    #print(geojs);
 
-    print("Exiting Program")
+    #print("Exiting Program")
 
     end = time.time()
-    print("Script Execution: ",round(end - start, 2))
+    #print("Script Execution: ",round(end - start, 2))
 
 
-def multiProcessing():
-    pool = mp.Pool(mp.cpu_count())
-    # results = pool.map(line, range(0, GRID_X));
-    results = pool.map(curveLine, range(0, 3))
+if __name__ == '__main__':
+    mp.freeze_support()
 
-    print( results )
+    start = time.time()
+
+    try:
+        mp.set_start_method('spawn')
+        pool = mp.Pool(mp.cpu_count())
+        # results = pool.map(line, range(0, GRID_X));
+        results = pool.map(curveLine, range(0, 4))
+    except Exception as e:
+        print(e)
+        # Logs the error appropriately.
+
+    #print( results )
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
 
-curveLine(17)
-#multiProcessing()
+    print("Exiting MP Program")
 
-# SQUARE, LEFT, RIGHT, STRAIGHT
-def getLeftCoordScheme(x,y, cachedX, format):
-    if ( format is "SQUARE"):
-        return [
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-            [round(longitude[x][y], 5), round(latitude[x][y], 5)],
-            [round(longitude[x][y + 1], 5), round(latitude[x][y + 1], 5)],
-            [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX][y + 1], 5)],
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-        ]
-    elif ( format is "LEFT"):
-        return [
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-            [round(longitude[x][y], 5), round(latitude[x][y], 5)],
-            [round(longitude[x+1][y + 1], 5), round(latitude[x-1][y + 1], 5)],
-            [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX][y + 1], 5)],
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-        ]
-    elif ( format is "RIGHT"):
-        return [
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-            [round(longitude[x-1][y], 5), round(latitude[x-1][y], 5)],
-            [round(longitude[x][y + 1], 5), round(latitude[x][y + 1], 5)],
-            [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX][y + 1], 5)],
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-        ]
-    elif ( format is "STRAIGHT"):
-        return [
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-            [round(longitude[x][y], 5), round(latitude[x][y], 5)],
-            [round(longitude[x][y + 1], 5), round(latitude[x][y + 1], 5)],
-            [round(longitude[cachedX][y + 1], 5), round(latitude[cachedX][y + 1], 5)],
-            [round(longitude[cachedX][y], 5), round(latitude[cachedX][y], 5)],
-        ]
+    end = time.time()
+    print("Script Execution: ", round(end - start, 2))
+
+#curveLine(17)
+#multiProcessing()
