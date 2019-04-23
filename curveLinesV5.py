@@ -15,15 +15,15 @@ RANGEY = 113
 #RANGEX = 100;
 #RANGEY = 100;
 
-SCALEMAX = 50;
-SCALEMIN = -10;
+SCALEMAX = 11;
+SCALEMIN = 19;
 TARGETMAX = 0;
-TARGETMIN = 10;
+TARGETMIN = 9;
 
 def valueMapper(value, minExist, maxExist, minTarget, maxTarget ):
     if value == -9900000000000000:
         return -9900000000000000;
-    return round(minTarget + (((value-minExist)*(maxTarget-minTarget))/(maxExist-minExist)),0)
+    return int(minTarget + (((value-minExist)*(maxTarget-minTarget))/(maxExist-minExist)))
 
 def curveLine(mag):
     #print("Start Script")
@@ -121,7 +121,7 @@ def curveLine(mag):
 
             # We set the start of the next polygon as the current value
             polygonStartX = x
-            startValue = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
+            startValue = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
             coords = [None, None, None, None, None]
             continue
 

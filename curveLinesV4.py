@@ -134,6 +134,8 @@ if __name__ == '__main__':
 
     start = time.time()
 
+    curveLine(17)
+    '''
     try:
         mp.set_start_method('spawn')
         pool = mp.Pool(mp.cpu_count())
@@ -142,6 +144,7 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
         # Logs the error appropriately.
+    '''
 
     #print( results )
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
