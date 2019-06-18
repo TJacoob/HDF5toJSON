@@ -6,24 +6,14 @@ import multiprocessing as mp
 
 import time
 
-INPUT = 'testFiles/WaterProperties.hdf5'
+INPUT = 'testFiles/WaterProperties_Surface.hdf5'
 #OUTPUT = 'testFiles/newdata.json'
 
-RANGEX = 243
-RANGEY = 113
+RANGEX = 124;
+RANGEY = 176;
 
 #RANGEX = 100;
 #RANGEY = 100;
-
-SCALEMAX = 11;
-SCALEMIN = 19;
-TARGETMAX = 0;
-TARGETMIN = 9;
-
-def valueMapper(value, minExist, maxExist, minTarget, maxTarget ):
-    if value == -9900000000000000:
-        return -9900000000000000;
-    return int(minTarget + (((value-minExist)*(maxTarget-minTarget))/(maxExist-minExist)))
 
 def curveLine(mag):
     #print("Start Script")
@@ -52,11 +42,11 @@ def curveLine(mag):
     OUTPUT = 'testFiles/' + magDict[mag] + '.json'
 
     for y in range(0,RANGEY):
-        startValue = valueMapper(magnitude[magDict[mag] + "_00001"][0][0][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+        startValue = round(magnitude[magDict[mag] + "_00001"][0][0][y], 1)
         polygonStartX = 0
         coords= [None, None, None, None, None]
         for x in range(0, RANGEX):
-            value = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+            value = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
             if ( value == startValue and x!= RANGEX-1):
                 continue
 
@@ -72,8 +62,8 @@ def curveLine(mag):
 
             else:
                 # Check above and below for the first cell (left):
-                valueAbove = valueMapper(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y+1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
-                valueBelow = valueMapper(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y-1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+                valueAbove = round(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y+1], 1)
+                valueBelow = round(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y-1], 1)
                 if ( valueAbove == startValue and valueBelow == startValue ):      # Same above and below: |
                     coords[0] = [round(longitude[polygonStartX][y], 5), round(latitude[polygonStartX][y], 5)]
                     coords[3] = [round(longitude[polygonStartX][y+1], 5), round(latitude[polygonStartX][y+1], 5)]
@@ -88,11 +78,11 @@ def curveLine(mag):
                     coords[3] = [round(longitude[polygonStartX][y+1], 5), round(latitude[polygonStartX][y+1], 5)]
 
                 coords[4] = coords[0]   # First and last coords must be the same to close the polygon
-                                        # This way we don't read the same value twice, improving performance
+                                        # This way we don't read the same value twice, (slightly) improving performance
 
                 # Check above and below for the last cell (right):
-                valueAbove = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y + 1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
-                valueBelow = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y - 1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+                valueAbove = round(magnitude[magDict[mag] + "_00001"][0][x][y + 1], 1)
+                valueBelow = round(magnitude[magDict[mag] + "_00001"][0][x][y - 1], 1)
                 if ( valueAbove == value and valueBelow == value ):      # Same above and below: |
                     coords[1] = [round(longitude[x][y], 5), round(latitude[x][y], 5)]
                     coords[2] = [round(longitude[x][y+1], 5), round(latitude[x][y+1], 5)]
@@ -108,7 +98,7 @@ def curveLine(mag):
 
             if ( startValue != -9900000000000000):
 
-                # Add polygon to the geojson if relevant
+                # Add polygon to the geojson if relevant aka != -9900000000000000
                 polygon = {
                     "type": "Feature",
                     "properties": {magDict[mag] + "_00001": startValue},
@@ -121,7 +111,7 @@ def curveLine(mag):
 
             # We set the start of the next polygon as the current value
             polygonStartX = x
-            startValue = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+            startValue = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
             coords = [None, None, None, None, None]
             continue
 
@@ -140,26 +130,23 @@ def curveLine(mag):
 
 
 if __name__ == '__main__':
-    mp.freeze_support()         # Necessary for windows
+    mp.freeze_support()
 
     start = time.time()
 
-    #print(round(valueMapper(20, -10, 50, 0, 20),0))
-
     curveLine(17)
-
     '''
     try:
-        mp.set_start_method('spawn')          # Force Windows Method of Multiprocessing
+        mp.set_start_method('spawn')
         pool = mp.Pool(mp.cpu_count())
         # results = pool.map(line, range(0, GRID_X));
-        results = pool.map(curveLine, range(0, 4))
+        results = pool.map(curveLine, range(0, 19))
     except Exception as e:
         print(e)
         # Logs the error appropriately.
     '''
 
-    #print( results )
+    # print( results )
     # results = [pool.apply(line, args=(x, )) for x in range(0, GRID_X)]
 
     print("Exiting MP Program")
@@ -167,4 +154,5 @@ if __name__ == '__main__':
     end = time.time()
     print("Script Execution: ", round(end - start, 2))
 
-
+#curveLine(17)
+#multiProcessing()

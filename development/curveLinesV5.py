@@ -9,11 +9,21 @@ import time
 INPUT = 'testFiles/WaterProperties.hdf5'
 #OUTPUT = 'testFiles/newdata.json'
 
-RANGEX = 243;
-RANGEY = 113;
+RANGEX = 243
+RANGEY = 113
 
 #RANGEX = 100;
 #RANGEY = 100;
+
+SCALEMAX = 11;
+SCALEMIN = 19;
+TARGETMAX = 0;
+TARGETMIN = 9;
+
+def valueMapper(value, minExist, maxExist, minTarget, maxTarget ):
+    if value == -9900000000000000:
+        return -9900000000000000
+    return int(minTarget + (((value-minExist)*(maxTarget-minTarget))/(maxExist-minExist)))
 
 def curveLine(mag):
     #print("Start Script")
@@ -42,11 +52,11 @@ def curveLine(mag):
     OUTPUT = 'testFiles/' + magDict[mag] + '.json'
 
     for y in range(0,RANGEY):
-        startValue = round(magnitude[magDict[mag] + "_00001"][0][0][y], 1)
+        startValue = valueMapper(magnitude[magDict[mag] + "_00001"][0][0][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
         polygonStartX = 0
         coords= [None, None, None, None, None]
         for x in range(0, RANGEX):
-            value = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
+            value = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
             if ( value == startValue and x!= RANGEX-1):
                 continue
 
@@ -62,8 +72,8 @@ def curveLine(mag):
 
             else:
                 # Check above and below for the first cell (left):
-                valueAbove = round(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y+1], 1)
-                valueBelow = round(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y-1], 1)
+                valueAbove = valueMapper(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y+1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+                valueBelow = valueMapper(magnitude[magDict[mag] + "_00001"][0][polygonStartX][y-1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
                 if ( valueAbove == startValue and valueBelow == startValue ):      # Same above and below: |
                     coords[0] = [round(longitude[polygonStartX][y], 5), round(latitude[polygonStartX][y], 5)]
                     coords[3] = [round(longitude[polygonStartX][y+1], 5), round(latitude[polygonStartX][y+1], 5)]
@@ -81,8 +91,8 @@ def curveLine(mag):
                                         # This way we don't read the same value twice, improving performance
 
                 # Check above and below for the last cell (right):
-                valueAbove = round(magnitude[magDict[mag] + "_00001"][0][x][y + 1], 1)
-                valueBelow = round(magnitude[magDict[mag] + "_00001"][0][x][y - 1], 1)
+                valueAbove = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y + 1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
+                valueBelow = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y - 1], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
                 if ( valueAbove == value and valueBelow == value ):      # Same above and below: |
                     coords[1] = [round(longitude[x][y], 5), round(latitude[x][y], 5)]
                     coords[2] = [round(longitude[x][y+1], 5), round(latitude[x][y+1], 5)]
@@ -111,7 +121,7 @@ def curveLine(mag):
 
             # We set the start of the next polygon as the current value
             polygonStartX = x
-            startValue = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
+            startValue = valueMapper(magnitude[magDict[mag] + "_00001"][0][x][y], SCALEMIN, SCALEMAX, TARGETMIN, TARGETMAX)
             coords = [None, None, None, None, None]
             continue
 
@@ -130,14 +140,17 @@ def curveLine(mag):
 
 
 if __name__ == '__main__':
-    mp.freeze_support()
+    mp.freeze_support()         # Necessary for windows
 
     start = time.time()
 
+    #print(round(valueMapper(20, -10, 50, 0, 20),0))
+
     curveLine(17)
+
     '''
     try:
-        mp.set_start_method('spawn')
+        mp.set_start_method('spawn')          # Force Windows Method of Multiprocessing
         pool = mp.Pool(mp.cpu_count())
         # results = pool.map(line, range(0, GRID_X));
         results = pool.map(curveLine, range(0, 4))
@@ -154,5 +167,4 @@ if __name__ == '__main__':
     end = time.time()
     print("Script Execution: ", round(end - start, 2))
 
-#curveLine(17)
-#multiProcessing()
+
