@@ -44,7 +44,7 @@ def curveLine(mag):
     for y in range(0,RANGEY):
         startValue = round(magnitude[magDict[mag] + "_00001"][0][0][y], 1)
         polygonStartX = 0
-        coords= [None, None, None, None, None]
+        coords = [None, None, None, None, None]
         for x in range(0, RANGEX):
             value = round(magnitude[magDict[mag] + "_00001"][0][x][y], 1)
             if ( value == startValue and x!= RANGEX-1):
