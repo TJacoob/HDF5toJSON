@@ -1,0 +1,121 @@
+{
+  "AMMONIA": {
+    "name": "Ammonia",
+    "hdfName": "ammonia",
+    "maxValue": 1,
+    "minValue": 0,
+    "rounding": 8,
+    "unit": "mg/l",
+    "formula": ""
+  },
+  
+  "COHESIVE_SEDIMENT": {
+    "name": "Cohesive Sediment",
+    "hdfName": "cohesive sediment",
+    "maxValue": 5,
+    "minValue": 0,
+    "rounding": 8,
+    "unit": "mg/l",
+    "formula": ""
+  },
+
+  "CHLA": {
+    "name": "Chlorophila",
+    "hdfName": "chlorophila",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "",
+    "formula": ""
+  },
+
+  "NITRATE": {
+    "name": "Nitrate",
+    "hdfName": "nitrate",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "",
+    "formula": ""
+  },
+
+  "OXYGEN": {
+    "name": "Oxygen",
+    "hdfName": "oxygen",
+    "maxValue": 15,
+    "minValue": 5,
+    "rounding": 3,
+    "unit": "mg/l",
+    "formula": ""
+  },
+
+  "PHOSPHATE": {
+    "name": "Phosphate",
+    "hdfName": "phosphate",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "",
+    "formula": ""
+  },
+
+  "SALINITY": {
+    "name": "Salinity",
+    "hdfName": "salinity",
+    "maxValue": 40,
+    "minValue": 30,
+    "rounding": 2,
+    "unit": "mg/l",
+    "formula": ""
+  },
+
+  "VELOCITY": {
+    "name": "Velocity",
+    "hdfName": "velocity",
+    "maxValue": 100,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "m/s",
+    "formula": ""
+  },
+
+  "TEMPERATURE": {
+    "name": "Temperature",
+    "hdfName": "temperature",
+    "maxValue": 30,
+    "minValue": 15,
+    "rounding": 1,
+    "unit": "mg/l",
+    "formula": ""
+  },
+
+  "ZOO": {
+    "name": "Zooplankton",
+    "hdfName": "zooplankton",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 5,
+    "unit": "mg/l",
+    "formula": ""
+  },
+
+  "MEAN_WAVE_PERIOD": {
+    "name": "Mean Wave Period",
+    "hdfName": "mean_wave_period",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 5,
+    "unit": "s",
+    "formula": ""
+  },
+
+  "SIGNIFICANT_WAVE_HEIGHT": {
+    "name": "Significant Wave Height",
+    "hdfName": "significant_wave_height",
+    "maxValue": 10,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "m",
+    "formula": ""
+  }
+}

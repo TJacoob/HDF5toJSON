@@ -3,7 +3,9 @@ MAG_AMMONIA = {
     "hdfName": "ammonia",
     "maxValue": 1,
     "minValue": 0,
-    "rounding": 8
+    "rounding": 8,
+    "unit": "mg/l",
+    "formula": "",
 }
 
 MAG_COHESIVE_SEDIMENT = {
@@ -11,7 +13,9 @@ MAG_COHESIVE_SEDIMENT = {
     "hdfName": "cohesive sediment",
     "maxValue": 5,
     "minValue": 0,
-    "rounding": 8
+    "rounding": 8,
+    "unit": "mg/l",
+    "formula": "",
 }
 
 MAG_OXYGEN = {
@@ -19,7 +23,9 @@ MAG_OXYGEN = {
     "hdfName": "oxygen",
     "maxValue": 15,
     "minValue": 5,
-    "rounding": 3
+    "rounding": 3,
+    "unit": "mg/l",
+    "formula": "",
 }
 
 MAG_SALINITY = {
@@ -27,7 +33,9 @@ MAG_SALINITY = {
     "hdfName": "salinity",
     "maxValue": 40,
     "minValue": 30,
-    "rounding": 2
+    "rounding": 2,
+    "unit": "mg/l",
+    "formula": "",
 }
 
 MAG_TEMPERATURE = {
@@ -35,7 +43,9 @@ MAG_TEMPERATURE = {
     "hdfName": "temperature",
     "maxValue": 30,
     "minValue": 15,
-    "rounding": 1
+    "rounding": 1,
+    "unit": "mg/l",
+    "formula": "",
 }
 
 
@@ -46,6 +56,7 @@ MAG_NAME = {
     "hdfName": "",
     "maxValue": 100,
     "minValue": 0,
-    "rounding": 2
+    "rounding": 2,
+    "unit":"",
 }
 '''

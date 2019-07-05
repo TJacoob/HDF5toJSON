@@ -3,8 +3,6 @@ import simplejson as json
 import os
 
 from config import *
-import magnitudes
-import domains
 
 '''
 This function must receive a tuple of strings corresponding to:
@@ -17,8 +15,11 @@ performs necessary computations to output the geoJson file
 def converter(args):
 
     # Load requested domain and magnitude info
-    DOMAIN = getattr(domains, "DOM_"+args[0])
-    MAGNITUDE = getattr(magnitudes, "MAG_"+args[1])
+    DOMAIN = args[0]
+    with open('magnitudes.json') as f:
+        magnitudes = json.load(f)
+    MAGNITUDE = magnitudes[(args[1].replace(" ", "_")).upper()]
+    TIMEFRAME = args[2]
 
     # Scale values for the value mapper (check valueMapper)
     magScaleMin = MAGNITUDE["minValue"]
@@ -33,12 +34,10 @@ def converter(args):
         "features": []
     }
 
-    # Get time information of the data, to use in the output name
-    time = data['Time']['Time_' + CONF_TIMEFRAME]
-    timestamp = str(int(time[0])) + "-" + str(int(time[1])) + "-" + str(int(time[2])) + "_" + str(int(time[3])) + ":" + str(int(time[4])) + ":" + str(int(time[5]))
-
     # The first object of the feature collection can include
     # information about this domain
+    # Disabled for now
+    '''
     if CONF_ADDDOMAININFO:
         domain_info = {
             "type": "Feature",
@@ -53,6 +52,7 @@ def converter(args):
             }
         }
         geojs["features"].append(domain_info)
+    '''
 
     # Copying Coordinates information to variables
     # reduces the number of accesses to the hdf files
@@ -171,9 +171,13 @@ def converter(args):
             coords = [None, None, None, None, None]
             continue
 
+    # Get time information of the data, to use in the output name
+    time = data['Time']['Time_' + TIMEFRAME]
+    #timestamp = str(int(time[0])) + "-" + str(int(time[1])) + "-" + str(int(time[2])) + "_" + str(int(time[3])) + ":" + str(int(time[4])) + ":" + str(int(time[5]))
+
     # Saving the json file with the converted data
     # Creates a folder for the domain and a folder inside with the date
-    outputFolder = "../testFiles/"+DOMAIN['directory']+"/"+str(int(time[0]))+"-"+str(int(time[1]))+"-"+str(int(time[2]))
+    outputFolder = "../testFiles/"+DOMAIN['name']+"/"+str(int(time[0]))+"-"+str(int(time[1]))+"-"+str(int(time[2]))
     outputName = MAGNITUDE["hdfName"]+"_"+str(int(time[3]))+":"+str(int(time[4]))+":"+str(int(time[5]))+".json"
     os.makedirs(outputFolder, exist_ok=True)
 
