@@ -2,7 +2,7 @@
 
 # Use multiprocessing ( True or False )
 # Enables processing all the magnitudes available for the selected domain
-CONF_MULTIPROCESSING = True
+CONF_MULTIPROCESSING = False
 
 # Add domain information to the first object of the geojson feature list
 # Disabled for now
@@ -13,20 +13,21 @@ CONF_COORDINATEROUNDING = 5
 
 # Hide magnitude values, using a scale (check valueMapper function)
 CONF_USESCALE = True
-CONF_MAXSCALE = 20
+# Ununsed right now, uses the magnitude color scale instead
+CONF_MAXSCALE = 10
 CONF_MINSCALE = 0
 
 # -- EXECUTION CONFIGURATIONS --
 
 # Name of the HDF5 File to use as input
-CONF_INPUTDATA = "../testFiles/WaterProperties_Surface.hdf5"
+CONF_INPUTDATA = "../testFiles/WaterProperties.hdf5"
 CONF_OUTPUTDATA = "../testFiles/test.json"  #UNUSED RIGHT NOW
 
 # Domain to be computed
-CONF_DOMAIN = "PCOMS"
+CONF_DOMAIN = "Douro"
 
 # Compute all time frames for the domain
-CONF_ALLTIMEFRAMES = True
+CONF_ALLTIMEFRAMES = False
 
 # List of timeframes to use
 # Might new two lists, for 24 hour range and 6 hour range, or a configuration field
@@ -38,7 +39,7 @@ CONF_TIMEFRAME = "00001"
 
 # If multiprocessing is turned off, select magnitude to be calculated
 # Check magnitudes.py for options
-CONF_MAGNITUDE = "TEMPERATURE"
+CONF_MAGNITUDE = "SALINITY"
 
 
 

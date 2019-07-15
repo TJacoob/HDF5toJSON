@@ -1,0 +1,385 @@
+{
+  "Hydrodynamic": [
+    {
+      "type": "FeatureCollection",
+	  "properties": {
+			"panTo": [[[26.08, -36.40],[26.08, 8.260259],[46.47998, 8.260259],[46.47998, -36.40],[26.08, -36.40]]]
+		},
+      "features": [
+        {
+          "type": "Feature",
+          "id": "03",
+          "properties": {
+            "name": "Lusitania",
+			"langFeatureId": "mapFeatureLayer-00",
+			"url": "mapResultDisplay.html?region=OPLusitania",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPLusitania/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity"],
+            "startTime": "2015-12-01-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "2",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-36.39, 26.07],[8.250259, 26.07],[8.250259, 46.46998],[-36.39, 46.46998],[-36.39, 26.07]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "02",
+          "properties": {
+            "name": ["PCOMS","PCOMSv2(rivers)"],
+			"langFeatureId": "mapFeatureLayer-01",
+            "url": ["mapResultDisplay.html?region=BIOPCOMS", "mapResultDisplay.html?region=BIOPCOMS_Rivers"],
+            "imagePrefixURL": ["http://forecast.maretec.org/Operational_Data/Resultados/Mapas/BIOPCOMS/","http://forecast.maretec.org/Operational_Data/Resultados/Mapas/BIOPCOMS_Rivers/"],
+            "availableVariables": [["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"],["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"]],
+            "startTime": ["2013-05-30-00-00",""],
+            "finishTime": ["",""],
+            "maxNextDaysAllowed": ["3",""],
+            "timeHourBasis": ["1","1"],
+            "threddsServerDataLink": ["http://thredds.maretec.org/thredds/catalog/MOHID_WATER/PORTUGAL_0.06DEG_50L_3H/FORECAST/catalog.html",""],
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-12.6, 34.38],[-5.1, 34.38],[-5.1, 45],[-12.6, 45],[-12.6, 34.38]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "03",
+          "properties": {
+            "name": "Tagus Mouth",
+			"langFeatureId": "mapFeatureLayer-02",
+            "url": "mapResultDisplay.html?region=OPTagus3D",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPTagus3D/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate", "Sediments"],
+            "startTime": "2015-12-31-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "3",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "http://thredds.maretec.org/thredds/catalog/MOHID_WATER/TAGUS_0.007DEG_50L_1H/FORECAST/catalog.html",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-10.02492, 38.15978],[-8.907423, 38.15978],[-8.907423, 39.21345],[-10.02492, 39.21345],[-10.02492, 38.15978]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "04",
+          "properties": {
+            "name": "Tagus Estuary",
+			"langFeatureId": "mapFeatureLayer-03",
+            "url": "mapResultDisplay.html?region=OPTagus200m_3D",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPTagus200m_3D/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", ""],
+            "startTime": "2015-12-31-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "3",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "http://thredds.maretec.org/thredds/catalog/MOHID_WATER/TAGUSESTUARY_200M_1L_1H/FORECAST/catalog.html",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-9.3922, 38.58839],[-8.662524, 38.58839],[-8.662524, 39.22078],[-9.3922, 39.22078],[-9.3922, 38.58839]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "05",
+          "properties": {
+            "name": "Cascais Coast",
+			"langFeatureId": "mapFeatureLayer-04",
+            "url": "mapResultDisplay.html?region=OPTagus200m_3D",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPGuia3D/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate", "Sediments"],
+            "startTime": "2015-12-30-00-00",
+            "finishTime": "2017-06-14-00-00",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-9.548701, 38.78007],[-9.340701, 38.78007],[-9.340701, 38.59407],[-9.548701, 38.59407],[-9.548701, 38.78007]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "06",
+          "properties": {
+            "name": "Estoril Coast",
+			"langFeatureId": "mapFeatureLayer-05",
+            "url": "mapResultDisplay.html?region=OPTagus200m_3D",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPCostadoEstoril/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate"],
+            "startTime": "",
+            "finishTime": "",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-9.35651, 38.66944],[-9.218511, 38.66944],[-9.218511, 38.70544],[-9.35651, 38.70544],[-9.35651, 38.66944]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "07",
+          "properties": {
+            "name": "Mondego",
+			"langFeatureId": "mapFeatureLayer-06",
+            "url": "mapResultDisplay.html?region=OPMondego",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPMondego/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"],
+            "startTime": "",
+            "finishTime": "",
+            "maxNextDaysAllowed": "2",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-8.95233, 40.1],[-8.656493, 40.1],[-8.656493, 40.18],[-8.95233, 40.18],[-8.95233, 40.1]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "08",
+          "properties": {
+            "name": "Douro",
+			"langFeatureId": "mapFeatureLayer-07",
+            "url": "mapResultDisplay.html?region=OPDouro",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPDouro/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate", "Sediments"],
+            "startTime": "2015-11-24-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "3",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-8.728004, 41.09199],[-8.484005, 41.09199],[-8.484005, 41.184],[-8.728004, 41.184],[-8.728004, 41.09199]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "09",
+          "properties": {
+            "name": "Aveiro",
+			"langFeatureId": "mapFeatureLayer-08",
+            "url": "mapResultDisplay.html?region=OPaveiro",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPaveiro/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Chla", "Zoo", "Nitrate", "Phosphate"],
+            "startTime": "",
+            "finishTime": "",
+            "maxNextDaysAllowed": "2",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-8.82, 40.5],[-8.52, 40.5],[-8.52, 40.86],[-8.82, 40.86],[-8.82, 40.5]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "10",
+          "properties": {
+            "name": "MinhoLima",
+			"langFeatureId": "mapFeatureLayer-09",
+            "url": "mapResultDisplay.html?region=OPMinhoLima",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPMinhoLima/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"],
+            "startTime": "",
+            "finishTime": "",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-8.888556, 41.5602],[-8.5, 41.5602],[-8.5, 42.01084],[-8.888556, 42.01084],[-8.888556, 41.5602]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "11",
+          "properties": {
+            "name": "Guadiana",
+            "langFeatureId": "mapFeatureLayer-10",
+            "url": "mapResultDisplay.html?region=OPGuadiana",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPGuadiana/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity"],
+            "startTime": "2019-05-22-00-00",
+            "finishTime": "",
+            "timeHourBasis": "1",
+            "maxNextDaysAllowed": "2",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+              "type": "Polygon",
+              "coordinates": [[[-7.48, 37.09],[-7.354, 37.09],[-7.354, 37.4878],[-7.48, 37.4878],[-7.48, 37.09]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "12",
+          "properties": {
+            "name": "Sado",
+            "langFeatureId": "mapFeatureLayer-11",
+            "url": "mapResultDisplay.html?region=OPSado",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPSado/",
+            "availableVariables": ["Salinity", "Temperature", "Velocity", "Nitrate", "Phosphate"],
+            "startTime": "2019-05-22-00-00",
+            "finishTime": "",
+            "timeHourBasis": "1",
+            "maxNextDaysAllowed": "2",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+              "type": "Polygon",
+              "coordinates": [[[-9.003619, 38.37336],[-8.524719, 38.37336],[-8.524719, 38.55851],[-9.003619, 38.55851],[-9.003619, 38.37336]]]
+          }
+        }
+		]
+    }
+  ],
+  "Waves": [
+    {
+      "type": "FeatureCollection",
+	  "properties": {
+			"panTo": [[[14.76, -90.26],[14.76, 5.26],[75.26, 5.26],[75.26, -90.26],[14.76, -90.26]]]
+		},
+      "features": [
+        {
+          "type": "Feature",
+          "id": "13",
+          "properties": {
+            "name": "ATN ",
+			"langFeatureId": "mapFeatureLayer-11",
+            "url": "mapResultDisplay.html?region=WWIII_ATN",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/WWIII_ATN/",
+            "availableVariables": ["mean_wave_period", "significant_wave_height"],
+            "startTime": "2019-05-21-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "8",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-90.25, 14.75],[5.25, 14.75],[5.25, 75.25],[-90.25, 75.25],[-90.25, 14.75]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "14",
+          "properties": {
+            "name": "SWEurope",
+			"langFeatureId": "mapFeatureLayer-12",
+            "url": "mapResultDisplay.html?region=WWIII_SWEurope",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/WWIII_SWEurope/",
+            "availableVariables": ["mean_wave_period", "significant_wave_height"],
+            "startTime": "2019-05-21-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "8",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-24.125, 32.875],[0.125, 32.875],[0.125, 48.125],[-24.125, 48.125],[-24.125, 32.875]]]
+          }
+        },
+        {
+          "type": "Feature",
+          "id": "15",
+          "properties": {
+            "name": "Portugal",
+			"langFeatureId": "mapFeatureLayer-13",
+            "url": "mapResultDisplay.html?region=WWIII_Portugal",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/WWIII_Portugal/",
+            "availableVariables": ["mean_wave_period", "significant_wave_height"],
+            "startTime": "2019-05-21-00-00",
+            "finishTime": "",
+            "maxNextDaysAllowed": "8",
+            "timeHourBasis": "1",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-11.8, 35.5],[-7.20, 35.5],[-7.20, 42.95],[-11.8, 42.95],[-11.8, 35.5]]]
+          }
+        }
+      ]
+	}
+  ],
+  "Watersheds": [
+    {
+      "type": "FeatureCollection",
+	  "properties": {
+			"panTo": [[[35.8775, -9.6684],[35.8775, 3.45161],[43.8775, 3.45161],[43.8775, -9.6684],[35.8775, -9.6684]]]
+		},
+      "features": [
+        {
+          "type": "Feature",
+          "id": "21",
+          "properties": {
+            "name": "Iberian Peninsula",
+			"langFeatureId": "mapFeatureLayer-14",
+            "url": "mapResultDisplay.html?region=OPIberianPeninsula_Land",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPIberianPeninsula_Land/",
+            "availableVariables": ["PorousMedia_RelWaterContent", "PorousMedia_WaterTableDepth", "Vegetation_LeafAreaIndex", "Runoff_VelocityModulus", "PorousMediaProp_Salinity", "PorousMediaProp_Nitrate"],
+            "startTime": "2019-02-12-00-00",
+            "finishTime": "",
+            "timeHourBasis": "24",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-9.6584, 35.8675],[3.44161, 35.8675],[3.44161, 43.8675],[-9.6584, 43.8675],[-9.6584, 35.8675]]]
+          }
+        },
+		{
+          "type": "Feature",
+          "id": "20",
+          "properties": {
+            "name": "West Iberia",
+			"langFeatureId": "mapFeatureLayer-15",
+            "url": "mapResultDisplay.html?region=OPPortugalGaliza_Land",
+            "imagePrefixURL": "http://forecast.maretec.org/Operational_Data/Resultados/Mapas/OPPortugalGaliza_Land/",
+            "availableVariables": ["PorousMedia_RelWaterContent", "PorousMedia_WaterTableDepth", "Vegetation_LeafAreaIndex", "Runoff_VelocityModulus", "PorousMediaProp_Salinity", "PorousMediaProp_Nitrate" ],
+            "startTime": "",
+            "finishTime": "",
+            "timeHourBasis": "24",
+            "threddsServerDataLink": "",
+            "movedToJSONTime": ""
+          },
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[-9.5, 36.8569],[-6.4, 36.8569],[-6.4, 43.85689],[-9.5, 43.85689],[-9.5, 36.8569]]]
+          }
+        }
+      ]
+    }
+  ] 
+  
+}

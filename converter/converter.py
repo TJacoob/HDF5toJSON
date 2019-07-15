@@ -76,13 +76,13 @@ def converter(args):
     for y in range(0, RANGEY-2):
 
         # Initial row configurations
-        startValue = valueMapper(round(results[0][y], magRound), magScaleMin, magScaleMax)
+        startValue = valueMapper(round(results[0][y], magRound), magScaleMin, magScaleMax, MAGNITUDE)
         polygonStartX = 0
         coords = [None, None, None, None, None]
 
         # Iterate columns (-1 because the next square is used for computations)
         for x in range(0, RANGEX-1):
-            value = valueMapper(round(results[x][y], magRound), magScaleMin, magScaleMax)
+            value = valueMapper(round(results[x][y], magRound), magScaleMin, magScaleMax, MAGNITUDE)
 
             if ( value == startValue and x!= RANGEX-2):
                 continue
@@ -97,8 +97,8 @@ def converter(args):
 
             else:
                 # Check above and below for the first cell (left):
-                valueAbove = valueMapper(round(results[polygonStartX][y+1], magRound), magScaleMin, magScaleMax)
-                valueBelow = valueMapper(round(results[polygonStartX][y-1], magRound), magScaleMin, magScaleMax)
+                valueAbove = valueMapper(round(results[polygonStartX][y+1], magRound), magScaleMin, magScaleMax, MAGNITUDE)
+                valueBelow = valueMapper(round(results[polygonStartX][y-1], magRound), magScaleMin, magScaleMax, MAGNITUDE)
 
                 # Same above and below: |
                 if ( valueAbove == startValue and valueBelow == startValue ):
@@ -125,8 +125,8 @@ def converter(args):
                 coords[4] = coords[0]
 
                 # Check above and below for the last cell (right):
-                valueAbove = valueMapper(round(results[x][y + 1], magRound), magScaleMin, magScaleMax)
-                valueBelow = valueMapper(round(results[x][y - 1], magRound), magScaleMin, magScaleMax)
+                valueAbove = valueMapper(round(results[x][y + 1], magRound), magScaleMin, magScaleMax, MAGNITUDE)
+                valueBelow = valueMapper(round(results[x][y - 1], magRound), magScaleMin, magScaleMax, MAGNITUDE)
 
                 # Same above and below: |
                 if ( valueAbove == value and valueBelow == value ):
@@ -167,7 +167,7 @@ def converter(args):
             # After writing the polygon to the object
             # We set the start of the next polygon as the current value
             polygonStartX = x
-            startValue = valueMapper(round(results[x][y], magRound), magScaleMin, magScaleMax)
+            startValue = valueMapper(round(results[x][y], magRound), magScaleMin, magScaleMax, MAGNITUDE)
             coords = [None, None, None, None, None]
             continue
 
@@ -200,12 +200,15 @@ It uses the following arguments:
     minExist: the lower end of the magnitude scale
     maxExist: the higher end of the magnitude scale
 '''
-def valueMapper(value, minExist, maxExist):
-    minTarget = CONF_MINSCALE
-    maxTarget = CONF_MAXSCALE
+def valueMapper(value, minExist, maxExist, magnitude):
 
     if not CONF_USESCALE:
         return value
+
+    minTarget = 0
+    maxTarget = len(magnitude["colorScale"]) - 1
+    # minTarget = CONF_MINSCALE
+    # maxTarget = CONF_MAXSCALE
 
     # Useless values remain unchanged.0
     if value == -9900000000000000:
