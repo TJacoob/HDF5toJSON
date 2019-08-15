@@ -1,11 +1,12 @@
 import multiprocessing as mp
 import time
 import traceback
-import simplejson as json
 
-from converter import converter
+import simplejson as json
 from config import *
-import domains
+
+from converter import areaConverter
+from converter import vectorConverter
 
 # -- MAIN PROGRAM --
 # This program converts HDF5 files to GeoJSON format
@@ -35,9 +36,12 @@ if __name__ == '__main__':
     with open('domains.json') as f:
         domains = json.load(f)
 
+    with open('magnitudes.json') as f:
+        MAGNITUDES = json.load(f)
+
     for type in domains:
         for domain in domains[type][0]["features"]:
-            # In case the same feature has two domains (such as PCOMS and PCOMSv2), it need treatment
+            # In case the same feature has two domains (such as PCOMS and PCOMSv2), it needs treatment
             if isinstance(domain["properties"]['name'], list):
                 for index, dom in enumerate(domain["properties"]['name']):
                     if dom == CONF_DOMAIN:
@@ -56,26 +60,43 @@ if __name__ == '__main__':
     print("Current Domain is: "+DOMAIN['properties']['name'])
 
     # Get and print list of all the available variables for the domain
-    magnitudes = []
-    print("Available Magnitudes: ", end='')
-    for m in DOMAIN['properties']['availableVariables']:
+    areaMagnitudes = []
+    vectorMagnitudes = []
+    availableVariables = DOMAIN['properties']['availableVariables']
+    #print("Available Magnitudes: ", end='')
+    for m in availableVariables :
         timebasis = int(DOMAIN["properties"]["timeHourBasis"])
-        if CONF_ALLTIMEFRAMES:
-            for timeframe in range(0,24,timebasis):
-                magnitudes.append((DOMAIN['properties'], m, CONF_24HOURLIST[timeframe]))
+        if MAGNITUDES[(m.replace(" ", "_")).upper()]['showTogether'] is not "":
+            availableVariables.append(MAGNITUDES[(m.replace(" ", "_")).upper()]['showTogether'])
+        if MAGNITUDES[(m.replace(" ", "_")).upper()]['vector'] is True:
+            if CONF_ALLTIMEFRAMES:
+                for timeframe in range(0, 24, timebasis):
+                    vectorMagnitudes.append((DOMAIN['properties'], m, CONF_24HOURLIST[timeframe]))
+            else:
+                vectorMagnitudes.append((DOMAIN['properties'], m, CONF_TIMEFRAME))
         else:
-            magnitudes.append((DOMAIN['properties'],m, CONF_TIMEFRAME))
-        print(m+", ", end='')
-    print("")
+            if CONF_ALLTIMEFRAMES:
+                for timeframe in range(0,24,timebasis):
+                    areaMagnitudes.append((DOMAIN['properties'], m, CONF_24HOURLIST[timeframe]))
+            else:
+                areaMagnitudes.append((DOMAIN['properties'],m, CONF_TIMEFRAME))
 
+
+        #print(m+", ", end='')
+    #print("")
+
+    # This process is done for area Magnitudes and repeated for Vector Magnitudes
     try:
-
+        mp.set_start_method('spawn')
+        pool = mp.Pool(mp.cpu_count() - 1)
         if CONF_MULTIPROCESSING:
-            mp.set_start_method('spawn')
-            pool = mp.Pool(mp.cpu_count()-1)
-            results = pool.map(converter, magnitudes)
+            print("AREA:")
+            results = pool.map(areaConverter, areaMagnitudes)
+            print("VECTOR:")
+            results = pool.map(vectorConverter, vectorMagnitudes)
         else:
-            converter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
+            areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
+            #vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_TIMEFRAME))
 
     except Exception as e:
         tb = traceback.format_exc()

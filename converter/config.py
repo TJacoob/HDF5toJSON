@@ -2,7 +2,8 @@
 
 # Use multiprocessing ( True or False )
 # Enables processing all the magnitudes available for the selected domain
-CONF_MULTIPROCESSING = False
+CONF_MULTIPROCESSING = True
+
 
 # Add domain information to the first object of the geojson feature list
 # Disabled for now
@@ -20,11 +21,11 @@ CONF_MINSCALE = 0
 # -- EXECUTION CONFIGURATIONS --
 
 # Name of the HDF5 File to use as input
-CONF_INPUTDATA = "../testFiles/WaterProperties.hdf5"
+CONF_INPUTDATA = ["../testFiles/Hydrodynamic_Surface.hdf5","../testFiles/WaterProperties.hdf5"]
 CONF_OUTPUTDATA = "../testFiles/test.json"  #UNUSED RIGHT NOW
 
 # Domain to be computed
-CONF_DOMAIN = "Douro"
+CONF_DOMAIN = "PCOMS"
 
 # Compute all time frames for the domain
 CONF_ALLTIMEFRAMES = False
@@ -39,7 +40,7 @@ CONF_TIMEFRAME = "00001"
 
 # If multiprocessing is turned off, select magnitude to be calculated
 # Check magnitudes.py for options
-CONF_MAGNITUDE = "SALINITY"
+CONF_MAGNITUDE = "VELOCITY"
 
 
 

@@ -35,7 +35,7 @@
 			"langFeatureId": "mapFeatureLayer-01",
             "url": ["mapResultDisplay.html?region=BIOPCOMS", "mapResultDisplay.html?region=BIOPCOMS_Rivers"],
             "imagePrefixURL": ["http://forecast.maretec.org/Operational_Data/Resultados/Mapas/BIOPCOMS/","http://forecast.maretec.org/Operational_Data/Resultados/Mapas/BIOPCOMS_Rivers/"],
-            "availableVariables": [["Salinity", "Temperature", "Oxygen", "Zoo", "Nitrate"],["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"]],
+            "availableVariables": [["Salinity", "Temperature", "Oxygen", "Zoo", "Nitrate", "Velocity"],["Salinity", "Temperature", "Velocity", "Oxygen", "Chla", "Zoo", "Nitrate", "Phosphate"]],
             "startTime": ["2012-01-01-00-00","2012-01-01-00-00"],
             "finishTime": ["","2017-03-24-00-00"],
             "maxNextDaysAllowed": ["3",""],

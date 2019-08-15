@@ -7,6 +7,8 @@
     "rounding": 8,
     "unit": "mg/l",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -29,6 +31,8 @@
     "rounding": 8,
     "unit": "mg/l",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -51,6 +55,8 @@
     "rounding": 2,
     "unit": "",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -73,6 +79,8 @@
     "rounding": 2,
     "unit": "",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -95,6 +103,8 @@
     "rounding": 3,
     "unit": "mg/l",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -117,6 +127,8 @@
     "rounding": 2,
     "unit": "",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -139,6 +151,8 @@
     "rounding": 2,
     "unit": "mg/l",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -155,12 +169,38 @@
 
   "VELOCITY": {
     "name": "Velocity",
-    "hdfName": "velocity",
-    "maxValue": 100,
+    "hdfName": "velocity modulus",
+    "maxValue": 1,
     "minValue": 0,
     "rounding": 2,
     "unit": "m/s",
     "formula": "",
+    "vector": false,
+    "showTogether": "Velocity Direction",
+    "colorScale": [
+      "rgba(202, 222, 227,0.85)",
+      "rgba(184, 212, 217,0.85)",
+      "rgba(166, 201, 208,0.85)",
+      "rgba(149, 190, 199,0.85)",
+      "rgba(131, 179, 190,0.85)",
+      "rgba(113, 169, 180,0.85)",
+      "rgba(96, 158, 171,0.85)",
+      "rgba(78, 147, 162,0.85)",
+      "rgba(61,137,153,0.85)",
+      "rgba(56,125,140,0.85)"
+    ]
+  },
+
+  "VELOCITY_DIRECTION": {
+    "name": "Velocity Direction",
+    "hdfName": ["velocity U", "velocity V"],
+    "maxValue": 1,
+    "minValue": 0,
+    "rounding": 2,
+    "unit": "m/s",
+    "formula": "",
+    "vector": true,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -183,6 +223,8 @@
     "rounding": 1,
     "unit": "Cº",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(55, 107, 176,0.95)",
       "rgba(69,117,180,0.95)",
@@ -205,6 +247,8 @@
     "rounding": 5,
     "unit": "mg/l",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -227,6 +271,8 @@
     "rounding": 5,
     "unit": "s",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
@@ -249,6 +295,8 @@
     "rounding": 2,
     "unit": "m",
     "formula": "",
+    "vector": false,
+    "showTogether": "",
     "colorScale": [
       "rgba(202, 222, 227,0.85)",
       "rgba(184, 212, 217,0.85)",
