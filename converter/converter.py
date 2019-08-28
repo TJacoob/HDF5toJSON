@@ -1,6 +1,7 @@
 import h5py
 import simplejson as json
 import os
+import numpy as np
 
 from config import *
 
@@ -20,6 +21,8 @@ def areaConverter(args):
         magnitudes = json.load(f)
     MAGNITUDE = magnitudes[(args[1].replace(" ", "_")).upper()]
     TIMEFRAME = args[2]
+
+    print("Processing %s , timeframe %s" % (MAGNITUDE["name"], TIMEFRAME))
 
     # Scale values for the value mapper (check valueMapper)
     magScaleMin = MAGNITUDE["minValue"]
@@ -43,7 +46,7 @@ def areaConverter(args):
             break
 
     # Get data related to the required magnitude
-    results = data['Results'][MAGNITUDE["hdfName"]][MAGNITUDE["hdfName"] + "_" + CONF_TIMEFRAME][0]
+    results = data['Results'][MAGNITUDE["hdfName"]][MAGNITUDE["hdfName"] + "_" + TIMEFRAME][0]
 
     # Create Structure of the geoJSON output
     geojs = {
@@ -170,7 +173,7 @@ def areaConverter(args):
                 # Add polygon to the geojson if relevant aka != -9900000000000000
                 polygon = {
                     "type": "Feature",
-                    "properties": {MAGNITUDE["hdfName"]: startValue},
+                    "properties": {MAGNITUDE["name"]: startValue},
                     "geometry": {
                         "type": "Polygon",
                         "coordinates": [coords]
@@ -191,8 +194,9 @@ def areaConverter(args):
 
     # Saving the json file with the converted data
     # Creates a folder for the domain and a folder inside with the date
-    outputFolder = "../testFiles/"+DOMAIN['name']+"/"+str(int(time[0]))+"-"+str(int(time[1]))+"-"+str(int(time[2]))
-    outputName = MAGNITUDE["hdfName"]+"_"+str(int(time[3]))+":"+str(int(time[4]))+":"+str(int(time[5]))+".json"
+    outputFolder = "../testFiles/"+DOMAIN['name']+"/"+MAGNITUDE["name"]+"/"+str(int(time[0]))+"-"+str(int(time[1])).zfill(2)+"-"+str(int(time[2])).zfill(2)
+    #outputName = MAGNITUDE["hdfName"]+"_"+str(int(time[3]))+":"+str(int(time[4]))+":"+str(int(time[5]))+".json"
+    outputName = MAGNITUDE["outputName"] + "_" + str(int(time[3])).zfill(2) + "00.json"
     os.makedirs(outputFolder, exist_ok=True)
 
     with open(outputFolder+"/"+outputName, 'w') as outfile:
@@ -208,9 +212,7 @@ def vectorConverter(args):
     MAGNITUDE = magnitudes[(args[1].replace(" ", "_")).upper()]
     TIMEFRAME = args[2]
 
-    # Scale values for the value mapper (check valueMapper)
-    magScaleMin = MAGNITUDE["minValue"]
-    magScaleMax = MAGNITUDE["maxValue"]
+    print("Processing %s , timeframe %s" % (MAGNITUDE["name"], TIMEFRAME))
 
     # Open File using h5py Library
     '''
@@ -236,9 +238,9 @@ def vectorConverter(args):
             break
 
     # Get data related to the required magnitude
-    resultsX = dataX['Results'][MAGNITUDE["hdfName"][0]][MAGNITUDE["hdfName"][0] + "_" + CONF_TIMEFRAME][0]
+    resultsX = dataX['Results'][MAGNITUDE["hdfName"][0]][MAGNITUDE["hdfName"][0] + "_" + TIMEFRAME][0]
     #print(resultsX)
-    resultsY = dataY['Results'][MAGNITUDE["hdfName"][1]][MAGNITUDE["hdfName"][1] + "_" + CONF_TIMEFRAME][0]
+    resultsY = dataY['Results'][MAGNITUDE["hdfName"][1]][MAGNITUDE["hdfName"][1] + "_" + TIMEFRAME][0]
     #print(resultsY)
 
     # Create Structure of the geoJSON output
@@ -284,6 +286,30 @@ def vectorConverter(args):
 
 
     # Iterate Rows make calculations and get results
+    for y in range(0, RANGEY-CONF_VECTORSTEP, CONF_VECTORSTEP):
+        for x in range(0, RANGEX - CONF_VECTORSTEP, CONF_VECTORSTEP):
+            # Neglect null values (0.0)
+            if resultsX[x][y] == 0 and resultsY[x][y] == 0 :
+                continue
+
+            # Calculations to get the direction in degrees
+            originPosition = (0, 0)
+            targetPosition = (resultsX[x][y],resultsY[x][y])
+            ang1 = np.arctan2(*originPosition[::-1])
+            ang2 = np.arctan2(*targetPosition[::-1])
+            direction = round(np.rad2deg((ang1 - ang2) % (2 * np.pi)),int(MAGNITUDE['rounding']))
+
+            coords = [round(longitude[x+1][y+1], coordRound), round(latitude[x+1][y+1], coordRound)]
+
+            point = {
+                "type": "Feature",
+                "properties": {MAGNITUDE["name"]: direction},
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": coords
+                }
+            }
+            geojs["features"].append(point)
 
 
 
@@ -293,10 +319,10 @@ def vectorConverter(args):
 
     # Saving the json file with the converted data
     # Creates a folder for the domain and a folder inside with the date
-    outputFolder = "../testFiles/" + DOMAIN['name'] + "/" + str(int(time[0])) + "-" + str(int(time[1])) + "-" + str(
-        int(time[2]))
-    outputName = MAGNITUDE["name"] + "_" + str(int(time[3])) + ":" + str(int(time[4])) + ":" + str(
-        int(time[5])) + ".json"
+    outputFolder = "../testFiles/" + DOMAIN['name'] + "/" + MAGNITUDE["name"] + "/" + str(int(time[0])) + "-" + str(
+        int(time[1])).zfill(2) + "-" + str(int(time[2])).zfill(2)
+    # outputName = MAGNITUDE["hdfName"]+"_"+str(int(time[3]))+":"+str(int(time[4]))+":"+str(int(time[5]))+".json"
+    outputName = MAGNITUDE["outputName"] + "_" + str(int(time[3])).zfill(2) + "00.json"
     os.makedirs(outputFolder, exist_ok=True)
 
     with open(outputFolder + "/" + outputName, 'w') as outfile:

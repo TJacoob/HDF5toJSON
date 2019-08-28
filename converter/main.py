@@ -76,7 +76,7 @@ if __name__ == '__main__':
                 vectorMagnitudes.append((DOMAIN['properties'], m, CONF_TIMEFRAME))
         else:
             if CONF_ALLTIMEFRAMES:
-                for timeframe in range(0,24,timebasis):
+                for timeframe in range(0, 24, timebasis):
                     areaMagnitudes.append((DOMAIN['properties'], m, CONF_24HOURLIST[timeframe]))
             else:
                 areaMagnitudes.append((DOMAIN['properties'],m, CONF_TIMEFRAME))
@@ -90,13 +90,15 @@ if __name__ == '__main__':
         mp.set_start_method('spawn')
         pool = mp.Pool(mp.cpu_count() - 1)
         if CONF_MULTIPROCESSING:
-            print("AREA:")
+            #print("AREA:")
             results = pool.map(areaConverter, areaMagnitudes)
-            print("VECTOR:")
+            #print("VECTOR:")
             results = pool.map(vectorConverter, vectorMagnitudes)
         else:
-            areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
-            #vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_TIMEFRAME))
+            if MAGNITUDES[CONF_MAGNITUDE]['vector']:
+                vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_TIMEFRAME))
+            else:
+                areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
 
     except Exception as e:
         tb = traceback.format_exc()

@@ -4,7 +4,6 @@
 # Enables processing all the magnitudes available for the selected domain
 CONF_MULTIPROCESSING = True
 
-
 # Add domain information to the first object of the geojson feature list
 # Disabled for now
 #CONF_ADDDOMAININFO = False
@@ -21,17 +20,16 @@ CONF_MINSCALE = 0
 # -- EXECUTION CONFIGURATIONS --
 
 # Name of the HDF5 File to use as input
-CONF_INPUTDATA = ["../testFiles/Hydrodynamic_Surface.hdf5","../testFiles/WaterProperties.hdf5"]
+CONF_INPUTDATA = ["../testFiles/2019-06-06_2019-06-07/Hydrodynamic_Surface.hdf5","../testFiles/2019-06-06_2019-06-07/WaterProperties_Surface.hdf5"]
 CONF_OUTPUTDATA = "../testFiles/test.json"  #UNUSED RIGHT NOW
 
 # Domain to be computed
 CONF_DOMAIN = "PCOMS"
 
 # Compute all time frames for the domain
-CONF_ALLTIMEFRAMES = False
+CONF_ALLTIMEFRAMES = True
 
 # List of timeframes to use
-# Might new two lists, for 24 hour range and 6 hour range, or a configuration field
 CONF_24HOURLIST = ["00001","00002","00003","00004","00005","00006","00007","00008","00009","00010","00011","00012",
                    "00013","00014","00015","00016","00017","00018","00019","00020","00021","00022","00023","00024"]
 
@@ -40,7 +38,11 @@ CONF_TIMEFRAME = "00001"
 
 # If multiprocessing is turned off, select magnitude to be calculated
 # Check magnitudes.py for options
-CONF_MAGNITUDE = "VELOCITY"
+CONF_MAGNITUDE = "VELOCITY_DIRECTION"
+
+# For the Vector Magnitudes, a step can be used to simplify the results
+# Should be an integer, being 5 the recomended value
+CONF_VECTORSTEP = 5
 
 
 
