@@ -95,10 +95,17 @@ if __name__ == '__main__':
             #print("VECTOR:")
             results = pool.map(vectorConverter, vectorMagnitudes)
         else:
-            if MAGNITUDES[CONF_MAGNITUDE]['vector']:
-                vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_TIMEFRAME))
+            if CONF_ALLTIMEFRAMES:
+                for timeframe in range(0, 24, timebasis):
+                    if MAGNITUDES[CONF_MAGNITUDE]['vector']:
+                        vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_24HOURLIST[timeframe]))
+                    else:
+                        areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_24HOURLIST[timeframe]))
             else:
-                areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
+                if MAGNITUDES[CONF_MAGNITUDE]['vector']:
+                    vectorConverter((DOMAIN['properties'], CONF_MAGNITUDE, CONF_TIMEFRAME))
+                else:
+                    areaConverter((DOMAIN['properties'],CONF_MAGNITUDE, CONF_TIMEFRAME))
 
     except Exception as e:
         tb = traceback.format_exc()
