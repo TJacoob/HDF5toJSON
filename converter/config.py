@@ -13,15 +13,17 @@ CONF_COORDINATEROUNDING = 5
 
 # Hide magnitude values, using a scale (check valueMapper function)
 CONF_USESCALE = True
-# Ununsed right now, uses the magnitude color scale instead
-CONF_MAXSCALE = 10
-CONF_MINSCALE = 0
+
+# Unused right now, uses the magnitude color scale instead
+#CONF_MAXSCALE = 10
+#CONF_MINSCALE = 0
 
 # -- EXECUTION CONFIGURATIONS --
 
 # Name of the HDF5 File to use as input
-CONF_INPUTDATA = ["../testFiles/2019-06-06_2019-06-07/Hydrodynamic_Surface.hdf5","../testFiles/2019-06-06_2019-06-07/WaterProperties_Surface.hdf5"]
-CONF_OUTPUTDATA = "../testFiles/test.json"  #UNUSED RIGHT NOW
+CONF_INPUTDATA = ["../testFiles/2019-06-10_2019-06-11/Hydrodynamic_Surface.hdf5","../testFiles/2019-06-10_2019-06-11/WaterProperties_Surface.hdf5"]
+
+#CONF_OUTPUTDATA = "../testFiles/test.json"  #UNUSED RIGHT NO
 
 # Domain to be computed
 CONF_DOMAIN = "PCOMS"
@@ -38,7 +40,7 @@ CONF_TIMEFRAME = "00001"
 
 # If multiprocessing is turned off, select magnitude to be calculated
 # Check magnitudes.py for options
-CONF_MAGNITUDE = "VELOCITY_DIRECTION"
+CONF_MAGNITUDE = "TEMPERATURE"
 
 # For the Vector Magnitudes, a step can be used to simplify the results
 # Should be an integer, being 5 the recomended value
